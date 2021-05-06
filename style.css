@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-size: 10px;
+}
+
+body {
+    min-width: 100vw;
+    min-height: 100vh;
+    font-family: 'Fira Sans', sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 100%;
+    height: 100%
+}
+
+.navbar {
+    width: 100%;
+    height: 60px;
+    background-color: #712be2;
+    color: white;
+}
+
+.nav-container {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-title {
+    font-size: 2.3rem;
+    font-style: italic;
+}
+
+.btn-refresh-all {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 3px;
+    color: #712be2;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.btn-refresh-all:hover {
+    background-color: #E3DC2B;
+    box-shadow: 2px 2px 5px rgba(0,0,0,.25);
+}
+
+.color-container {
+    width: 100%;
+    height: calc(100vh - 65px);
+    display: flex;
+}
+
+.color {
+    width: 100%;
+    border-right: 1px solid #d4d4d4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.color:last-child {
+    border-right: none;
+}
+
+.btn-color {
+    width: 35px;
+    height: 35px;
+    padding: 7px;
+    background-color: white;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    cursor: pointer;
+    box-shadow: .5px .5px 5px rgba(0,0,0,.1);
+    transition: .3s ease;
+}
+
+.btn-color:hover {
+    transform: scale(1.2);
+}
+
+.btn-color-img {
+    width: 100%;
+    height: 100%;
+}
+
+.color-name {
+    padding: 5px 10px;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 1.6rem;
+    margin-top: 10px;
+    box-shadow: .5px .5px 5px rgba(0,0,0,.15);
+}
