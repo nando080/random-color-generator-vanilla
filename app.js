@@ -1,3 +1,5 @@
+const colorsEL = document.querySelectorAll(".color")
+
 const colors = []
 
 const generateSingleColorValue = () => {
@@ -53,9 +55,13 @@ const fillColorsArray = () => {
 }
 
 const applyColorsIntoDOM = () => {
-    
+    colorsEL.forEach((item, index) => {
+        item.style.backgroundColor = colors[index]
+    })
 }
 
 fillColorsArray()
 
-console.log(colors)
+applyColorsIntoDOM()
+
+console.log(colorsEL)
