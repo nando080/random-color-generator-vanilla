@@ -54,9 +54,11 @@ const fillColorsArray = () => {
     }
 }
 
-const showColorHexValue = colorsArray => {
-    colorsEL.forEach((item, index) => {
-        item.querySelector('.color-name').textContent = colorsArray[index]
+const showColorHexValue = (colorContainers, colorsArray) => {
+    colorContainers.forEach((item, index) => {
+        const colorLabel = item.querySelector('.color-name')
+        colorLabel.textContent = colorsArray[index]
+        colorLabel.style.color = colorsArray[index]
     })
 }
 
@@ -66,10 +68,13 @@ const applyColorsIntoDOM = () => {
     })
 }
 
-fillColorsArray()
 
-applyColorsIntoDOM()
+const initialize = () => {
+    fillColorsArray()
+    applyColorsIntoDOM()
+    showColorHexValue(colorsEL, colors)
+}
 
-showColorHexValue(colors)
+window.addEventListener('load', initialize)
 
 console.log()
