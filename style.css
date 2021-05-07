@@ -15,6 +15,7 @@ body {
     min-height: 100vh;
     font-family: 'Fira Sans', sans-serif;
     background-color: #f0f0f0;
+    overflow: hidden;
 }
 
 .container {
