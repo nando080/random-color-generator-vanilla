@@ -54,6 +54,12 @@ const fillColorsArray = () => {
     }
 }
 
+const showColorHexValue = colorsArray => {
+    colorsEL.forEach((item, index) => {
+        item.querySelector('.color-name').textContent = colorsArray[index]
+    })
+}
+
 const applyColorsIntoDOM = () => {
     colorsEL.forEach((item, index) => {
         item.style.backgroundColor = colors[index]
@@ -64,4 +70,6 @@ fillColorsArray()
 
 applyColorsIntoDOM()
 
-console.log(colorsEL)
+showColorHexValue(colors)
+
+console.log()
