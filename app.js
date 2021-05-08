@@ -114,6 +114,15 @@ const isActionTargetLocked = (actionTarget) => {
     }
 }
 
+const changeLockButton = (actionTarget) => {
+    const btnLockImg = actionTarget.querySelector('[data-js="lock"]').querySelector('[data-js="lock"]')
+    if (isActionTargetLocked(actionTarget)) {
+        btnLockImg.src = './img/lock.svg'
+    } else {
+        btnLockImg.src = './img/unlock.svg'
+    }
+}
+
 const refreshSingleColor = (eventTarget) => {
     let refreshTarget = getActionTarget(eventTarget, 'refresh')
     const colorIndex = Number(refreshTarget.dataset.initialOrder) - 1
@@ -136,7 +145,7 @@ const lockSingleColor = (eventTarget) => {
     } else {
         lockTarget.dataset.isLocked = 'true'
     }
-    console.log(lockTarget, isActionTargetLocked(lockTarget));
+    changeLockButton(lockTarget)
 }
 
 const excludeSingleColor = (eventTarget) => {
