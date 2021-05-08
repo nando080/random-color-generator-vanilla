@@ -3,6 +3,8 @@ const btnRefreshAllEL = document.querySelector('.btn-refresh-all')
 
 const colors = []
 
+let numberOfColorsVisibleInDOM = colorsEL.length
+
 const generateSingleColorValue = () => {
     const randomNumber = Math.floor(Math.random() * 16)
     if (randomNumber <= 9) {
@@ -79,13 +81,55 @@ const clearColorArray = () => {
 const initialize = () => {
     fillcolorArray(colors)
     applyColorsIntoDOM(colorsEL, colors)
-    showColorHexValue(colorsEL, colors) 
+    showColorHexValue(colorsEL, colors)
+    addListenersInActionButtons()
 }
 
 const refreshAllColors = () => {
     clearColorArray()
     initialize()
     console.log(colors);
+}
+
+const refreshSingleColor = () => {
+    console.log('refresh');
+}
+
+const lockSingleColor = () => {
+    console.log('lock');
+}
+
+const excludeSingleColor = (eventTarget) => {
+    let exclusionTarget = null
+    if (eventTarget.parentNode.dataset.js === 'exclude') {
+        exclusionTarget = eventTarget.parentNode.parentNode
+    } else {
+        exclusionTarget = eventTarget.parentNode
+    }
+    if (numberOfColorsVisibleInDOM > 1) {
+        exclusionTarget.parentNode.removeChild(exclusionTarget)
+        numberOfColorsVisibleInDOM--
+    }
+}
+
+const addListenersInActionButtons = () => {
+    colorsEL.forEach( element => {
+        element.addEventListener('click', (event) => {
+            const clickTarget = event.target
+            const targetDataset = clickTarget.dataset.js
+            switch (targetDataset) {
+                case 'refresh':
+                    refreshSingleColor(clickTarget)
+                    break
+                case 'lock':
+                    lockSingleColor(clickTarget)
+                    break
+                case 'exclude':
+                    excludeSingleColor(clickTarget)
+                    break
+            }
+        })
+    } )
 }
 
 btnRefreshAllEL.addEventListener('click', refreshAllColors)
@@ -99,4 +143,4 @@ document.addEventListener('keypress', (event) => {
 
 window.addEventListener('load', initialize)
 
-console.log(colors);
+console.log(numberOfColorsVisibleInDOM);
