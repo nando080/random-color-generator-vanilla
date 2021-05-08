@@ -65,7 +65,8 @@ const showColorHexValue = (colorContainers, colorArray) => {
     })
 }
 
-const applyColorsIntoDOM = (colorsContainer, colorArray) => {
+//TODO: create a function to apply single colors in to dom
+const applyAllColorsIntoDOM = (colorsContainer, colorArray) => {
     colorsContainer.forEach((item, index) => {
         item.style.backgroundColor = colorArray[index]
     })
@@ -80,7 +81,7 @@ const clearColorArray = () => {
 
 const initialize = () => {
     fillcolorArray(colors)
-    applyColorsIntoDOM(colorsEL, colors)
+    applyAllColorsIntoDOM(colorsEL, colors)
     showColorHexValue(colorsEL, colors)
     addListenersInActionButtons()
 }
@@ -91,8 +92,30 @@ const refreshAllColors = () => {
     console.log(colors);
 }
 
-const refreshSingleColor = () => {
-    console.log('refresh');
+const getActionTarget = (eventTarget, actionType) => {
+    let actionTarget = null
+    if (eventTarget.parentNode.dataset.js === actionType) {
+        actionTarget = eventTarget.parentNode.parentNode
+    } else {
+        actionTarget = eventTarget.parentNode
+    }
+    return actionTarget
+}
+
+const refreshSingleColor = (eventTarget) => {
+    let refreshTarget = getActionTarget(eventTarget, 'refresh')
+    let isColorLocked = refreshTarget.dataset.isLocked
+    const colorIndex = Number(refreshTarget.dataset.initialOrder) - 1
+
+    if (isColorLocked === 'false') {
+        const newColor = generateColorString()
+        while (isNextColorEqualsPrevious(colors, newColor)) {
+            newColor = generateColorString()
+        }
+        colors[colorIndex] = newColor
+    }
+
+    console.log(colors[colorIndex]);
 }
 
 const lockSingleColor = () => {
@@ -100,14 +123,9 @@ const lockSingleColor = () => {
 }
 
 const excludeSingleColor = (eventTarget) => {
-    let exclusionTarget = null
-    let isColorLocked = null
-    if (eventTarget.parentNode.dataset.js === 'exclude') {
-        exclusionTarget = eventTarget.parentNode.parentNode
-    } else {
-        exclusionTarget = eventTarget.parentNode
-    }
-    isColorLocked = exclusionTarget.dataset.isLocked
+    let exclusionTarget = getActionTarget(eventTarget, 'exclude')
+    let isColorLocked = exclusionTarget.dataset.isLocked
+   
     if (numberOfColorsVisibleInDOM > 1 && isColorLocked === 'false') {
         exclusionTarget.parentNode.removeChild(exclusionTarget)
         numberOfColorsVisibleInDOM--
