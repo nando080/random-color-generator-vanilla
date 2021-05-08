@@ -1,4 +1,5 @@
-const colorsEL = document.querySelectorAll(".color")
+const colorsEL = document.querySelectorAll('.color')
+const btnRefreshAllEL = document.querySelector('.btn-refresh-all')
 
 const colors = []
 
@@ -25,19 +26,19 @@ const generateSingleColorValue = () => {
 }
 
 const generateColorString = () => {
-    let colorsArray = []
+    let colorArray = []
     for (let i = 0; i <= 5; i++) {
-        colorsArray.push(generateSingleColorValue())
+        colorArray.push(generateSingleColorValue())
     }
-    return `#${colorsArray.join("")}`
+    return `#${colorArray.join("")}`
 }
 
-const isNextColorEqualsPrevious = (colorsArray, nextColor) => {
+const isNextColorEqualsPrevious = (colorArray, nextColor) => {
     let isEqual = false
-    if (colorsArray.length === 0) {
+    if (colorArray.length === 0) {
         return isEqual
     }
-    colorsArray.forEach((color) => {
+    colorArray.forEach((color) => {
         if (color === nextColor) {
             isEqual = true
         }
@@ -45,36 +46,57 @@ const isNextColorEqualsPrevious = (colorsArray, nextColor) => {
     return isEqual
 }
 
-const fillColorsArray = () => {
+const fillcolorArray = (colorArray) => {
     for (let i = 0; i <= 5; i++) {
         const actualColor = generateColorString()
-        if (!isNextColorEqualsPrevious(colors, actualColor)) {
-            colors.push(actualColor);
+        if (!isNextColorEqualsPrevious(colorArray, actualColor)) {
+            colorArray.push(actualColor);
         }
     }
 }
 
-const showColorHexValue = (colorContainers, colorsArray) => {
+const showColorHexValue = (colorContainers, colorArray) => {
     colorContainers.forEach((item, index) => {
         const colorLabel = item.querySelector('.color-name')
-        colorLabel.textContent = colorsArray[index]
-        colorLabel.style.color = colorsArray[index]
+        colorLabel.textContent = colorArray[index]
+        colorLabel.style.color = colorArray[index]
     })
 }
 
-const applyColorsIntoDOM = () => {
-    colorsEL.forEach((item, index) => {
-        item.style.backgroundColor = colors[index]
+const applyColorsIntoDOM = (colorsContainer, colorArray) => {
+    colorsContainer.forEach((item, index) => {
+        item.style.backgroundColor = colorArray[index]
     })
 }
 
+const clearColorArray = () => {
+    const initialIndex = colors.length
+    for (let i = 0; i < initialIndex; i++) {
+        colors.pop()
+    }
+}
 
 const initialize = () => {
-    fillColorsArray()
-    applyColorsIntoDOM()
-    showColorHexValue(colorsEL, colors)
+    fillcolorArray(colors)
+    applyColorsIntoDOM(colorsEL, colors)
+    showColorHexValue(colorsEL, colors) 
 }
+
+const refreshAllColors = () => {
+    clearColorArray()
+    initialize()
+    console.log(colors);
+}
+
+btnRefreshAllEL.addEventListener('click', refreshAllColors)
+
+document.addEventListener('keypress', (event) => {
+    const isRightKey = event.code === 'Enter'
+    if (isRightKey) {
+        refreshAllColors()
+    }
+})
 
 window.addEventListener('load', initialize)
 
-console.log()
+console.log(colors);
