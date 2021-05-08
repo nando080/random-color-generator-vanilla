@@ -101,12 +101,14 @@ const lockSingleColor = () => {
 
 const excludeSingleColor = (eventTarget) => {
     let exclusionTarget = null
+    let isColorLocked = null
     if (eventTarget.parentNode.dataset.js === 'exclude') {
         exclusionTarget = eventTarget.parentNode.parentNode
     } else {
         exclusionTarget = eventTarget.parentNode
     }
-    if (numberOfColorsVisibleInDOM > 1) {
+    isColorLocked = exclusionTarget.dataset.isLocked
+    if (numberOfColorsVisibleInDOM > 1 && isColorLocked === 'false') {
         exclusionTarget.parentNode.removeChild(exclusionTarget)
         numberOfColorsVisibleInDOM--
     }
