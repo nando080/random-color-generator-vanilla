@@ -1,7 +1,7 @@
 const colorsEL = document.querySelectorAll('.color')
 const btnRefreshAllEL = document.querySelector('.btn-refresh-all')
 
-const colors = []
+const colors = Array(5).fill('')
 
 let numberOfColorsVisibleInDOM = colorsEL.length
 
@@ -49,10 +49,13 @@ const isNextColorEqualsPrevious = (colorArray, nextColor) => {
 }
 
 const fillcolorArray = (colorArray) => {
-    for (let i = 0; i <= 5; i++) {
-        const actualColor = generateColorString()
-        if (!isNextColorEqualsPrevious(colorArray, actualColor)) {
-            colorArray.push(actualColor);
+    for (let i = 0; i < colorArray.length; i++) {
+        let actualColor = generateColorString()
+        while (isNextColorEqualsPrevious(colorArray, actualColor)) {
+            actualColor = generateColorString()
+        } 
+        if (!isActionTargetLocked(colorsEL[i])) {
+            colorArray[i] = actualColor
         }
     }
 }
@@ -76,17 +79,13 @@ const applyAllColorsIntoDOM = (colorsContainer, colorArray) => {
 }
 
 const clearColorArray = () => {
-    const initialIndex = colors.length
+    const initialIndex = colors.length - 1
+    console.log(colors.length);
     for (let i = 0; i < initialIndex; i++) {
-        colors.pop()
+        if (!isActionTargetLocked(colorsEL[i])) {
+            colors[i] = ''
+        }
     }
-}
-
-const initialize = () => {
-    fillcolorArray(colors)
-    applyAllColorsIntoDOM(colorsEL, colors)
-    showColorHexValue(colorsEL, colors)
-    addListenersInActionButtons()
 }
 
 const refreshAllColors = () => {
@@ -177,6 +176,13 @@ const addListenersInActionButtons = () => {
     } )
 }
 
+const initialize = () => {
+    fillcolorArray(colors)
+    applyAllColorsIntoDOM(colorsEL, colors)
+    showColorHexValue(colorsEL, colors)
+    addListenersInActionButtons()
+}
+
 btnRefreshAllEL.addEventListener('click', refreshAllColors)
 
 document.addEventListener('keypress', (event) => {
@@ -187,5 +193,3 @@ document.addEventListener('keypress', (event) => {
 })
 
 window.addEventListener('load', initialize)
-
-console.log();
