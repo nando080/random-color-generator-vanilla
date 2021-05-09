@@ -90,8 +90,9 @@ const clearColorArray = () => {
 
 const refreshAllColors = () => {
     clearColorArray()
-    initialize()
-    console.log(colors);
+    fillcolorArray(colors)
+    applyAllColorsIntoDOM(colorsEL, colors)
+    showColorHexValue(colorsEL, colors)
 }
 
 const getActionTarget = (eventTarget, actionType) => {
